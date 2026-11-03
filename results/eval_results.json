@@ -1,0 +1,32 @@
+{
+ "g03": {
+  "goal": "Reduce my electricity bill by 20% but my family still needs hot water.",
+  "category": "feasible",
+  "answer": "Found anomaly: console was 3.3 times normal for daily_energy and 6.0 times normal for night_standby_draw over 14 days, so I prioritized it.\n\nPlan to save 33.01 kWh / 23.1 PEN / 20.2%:\n- cut standby console\n- cut standby tv\n- reduce water heater by 14 min/day, keeping hot water\n\nThis meets your 20% goal with least intrusion. Approve to apply?",
+  "tools": [
+   "get_baseline",
+   "get_standby_loads",
+   "get_anomalies",
+   "simulate_action",
+   "simulate_action",
+   "simulate_action",
+   "simulate_action",
+   "simulate_action",
+   "simulate_action",
+   "submit_plan"
+  ],
+  "official_pct": 20.2,
+  "checks": {
+   "no_protected_in_plan": true,
+   "respects_forbidden": true,
+   "numbers_grounded": true,
+   "asked_for_approval": true,
+   "no_truncation": true,
+   "no_step_cap_hit": true,
+   "plan_valid": true,
+   "meets_goal": true,
+   "not_overshooting(<=+3pp)": true
+  },
+  "ungrounded_numbers": []
+ }
+}
