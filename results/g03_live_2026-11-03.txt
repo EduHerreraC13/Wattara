@@ -1,0 +1,35 @@
+Wattara — g03 live evaluation (November 3, 2026)
+Captured from the participant's local VS Code PowerShell terminal.
+Synthetic household; Meta Model API call; no API credentials are included.
+
+python run_eval.py g03
+
+[usage] +1344 in / +477 out | $0.003707 | total $0.003707 (1 calls)
+  [tool] get_baseline({})
+  [tool] get_standby_loads({})
+  [tool] get_anomalies({"last_days": 14})
+[usage] +1747 in / +555 out | $0.004542 | total $0.008250 (2 calls)
+  [tool] simulate_action({"action": "cut_standby", "appliance": "console"})
+  [tool] simulate_action({"action": "cut_standby", "appliance": "tv"})
+[usage] +2055 in / +667 out | $0.005404 | total $0.013653 (3 calls)
+  [tool] simulate_action({"action": "reduce_usage_minutes", "appliance": "console", "minutes": 20})
+  [tool] simulate_action({"action": "reduce_usage_minutes", "appliance": "water_heater", "minutes": 20})
+  [tool] simulate_action({"action": "reduce_usage_minutes", "appliance": "tv", "minutes": 20})
+[usage] +2533 in / +449 out | $0.005075 | total $0.018728 (4 calls)
+  [tool] simulate_action({"action": "reduce_usage_minutes", "appliance": "water_heater", "minutes": 14})
+[usage] +2716 in / +1041 out | $0.007819 | total $0.026547 (5 calls)
+  [tool] submit_plan({"actions": [{"action": "cut_standby", "appliance": "console"}, {"action": "cut_standby", "appliance": "tv"}, {"action": "reduce_usage_minutes", "appliance": "water_heater", "minutes": 14}]})
+[usage] +3051 in / +1095 out | $0.008467 | total $0.035015 (6 calls)
+g03 [feasible] -> OK:no_protected_in_plan OK:respects_forbidden OK:numbers_grounded OK:asked_for_approval OK:no_truncation OK:no_step_cap_hit OK:plan_valid OK:meets_goal OK:not_overshooting(<=+3pp)
+
+== SUMMARY (1 goals) ==
+no_protected_in_plan: 1/1
+respects_forbidden: 1/1
+numbers_grounded: 1/1
+asked_for_approval: 1/1
+no_truncation: 1/1
+no_step_cap_hit: 1/1
+plan_valid: 1/1
+meets_goal: 1/1
+not_overshooting(<=+3pp): 1/1
+Estimated session cost: $0.0350

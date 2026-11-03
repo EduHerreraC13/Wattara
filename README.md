@@ -1,6 +1,6 @@
 # Wattara
 
-**An energy-planning agent for households in Peru.**  
+**An energy-planning agent for households in Peru.**
 Built for the **Meta Global AI Developer Hackathon 2026 — Indie Developer track** (*Build for Your World*).
 
 Wattara turns a household's electricity-saving goal into a concrete plan. Instead of just recommending generic habits, it looks at consumption patterns, checks possible actions, calculates their expected savings, and asks for permission before applying anything.
@@ -189,19 +189,23 @@ For a simulated baseline of **163.7 kWh/month** (**S/ 114.56**, using an example
 
 After manual approval, the simulator reported **26.6 kWh/month** in measured-model savings and `CONFIRMED`, then reverted the actions. Both the baseline and the follow-up measurements are simulated; this does not prove a real home would save the same amount or retain hot water at the desired times.
 
-### Agent behavior: earlier exploratory evaluation
+### Agent behavior and post-fix `g03` verification
 
-An earlier evaluation used **15 hand-written goals** in Spanish and English, with Python checks for protected devices, arithmetic grounding, feasibility and refusals. The reported final run found **0/15 protected-device actions**, **0/15 detected unsupported figures**, and **3/3 refusals for unsafe requests**; **14/15 goals** passed every check in that run.
+An earlier exploratory evaluation used **15 hand-written goals** in Spanish and English, with Python checks for protected devices, grounded numbers, feasibility and refusals. The reported final run found **0/15 protected-device actions**, **0/15 detected unsupported figures**, and **3/3 refusals for unsafe requests**; **14/15 goals** passed all applicable checks in that run.
 
-**Evidence status:** The original JSON logs for the full 15-goal evaluation are **not included in the supplied project archive**, so these historical figures cannot currently be independently inspected from this repository. The current live example above was run successfully; the full set can be regenerated with a Meta API key:
+The original JSON logs for that **full 15-goal evaluation** were not present in the initial project archive. These historical numbers should be read as previously reported results, not as a new 15/15 test after the code change.
+
+**Live retest on November 3, 2026 — `g03`:** This goal asks the agent to reduce the electricity bill by **20%** while preserving hot water. It had previously failed because the agent reached its tool-step limit. After the change to step handling, it was run again against Muse Spark through the Meta Model API:
 
 ```bash
-python run_eval.py
+python run_eval.py g03
 ```
 
-That command makes paid API calls and caches completed cases in `results/eval_results.json`. To rerun a specific case, such as `g03`, remove its existing cached entry first (keeping a backup), then run `python run_eval.py g03`.
+The retest completed in **6 API calls**, passed **9/9 deterministic checks**, and did **not** truncate or hit the step cap. The checks covered protected appliances, restrictions, numbers drawn from tool results, approval, a valid plan, target achievement and avoiding excessive savings relative to the goal. Estimated usage cost from the application: **US$0.0350**. See [`results/g03_live_2026-11-03.txt`](results/g03_live_2026-11-03.txt) for the recorded console output.
 
-In an earlier run, `g03` hit the tool-step limit. The implementation now has an eight-step cap and a final-response fallback, tested offline in `tests/test_agent_mock.py`. **A post-fix live API retest of `g03` is not yet documented.** The evaluation's text checks also use some keyword heuristics and do not replace human review.
+This is **one successful post-fix live retest of `g03`**, not a claim that all 15 goals were rerun successfully or that the behavior will be identical on every attempt. The original step-cap failure did not recur in this run; the fallback mechanism itself is covered separately by the offline mock test.
+
+Live evaluations require a Meta API key and incur usage charges. Completed cases are cached in `results/eval_results.json`; running the same ID again may show a summary with **US$0.0000 incremental usage** because no new API call is made. To force a retest, back up the JSON and delete only that ID's cached entry before running the command again. Any JSON added to the public repository must first be checked for secrets and personal data. Some evaluation checks use keyword heuristics and do not replace manual review of the responses.
 
 ## Design choices and limitations
 
