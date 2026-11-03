@@ -1,0 +1,16 @@
+== DAILY FORECAST (1 day ahead) ==
+MAE LightGBM: 0.755 kWh | baseline same-weekday-last-week: 0.947 | baseline 7-day mean: 0.752 | average daily use: 4.28 kWh
+== BILL PROJECTION FROM DAY 10 ==
+2026-10: actual S/ 95.2 | model S/ 93.8 | naive S/ 96.3
+2026-11: actual S/ 91.9 | model S/ 91.1 | naive S/ 93.3
+2026-12: actual S/ 92.3 | model S/ 93.1 | naive S/ 100.2
+2027-01: actual S/ 89.0 | model S/ 92.3 | naive S/ 97.2
+Mean error (%): model 1.70 | naive 5.09
+== ANOMALY DETECTION (injected faults) ==
+Per-appliance residuals -> precision 0.962 | recall 1.0 (TP 75, FP 3, FN 0)
+Baseline: threshold on total daily kWh -> precision 1.0 | recall 0.04 (TP 3, FP 0, FN 72)
+  console_standby: detected on 100 % of its days
+  fridge_degraded: detected on 100 % of its days
+  heater_leak: detected on 100 % of its days
+New healthy home: 3 false alarms in 150 days
+Cause (day 30): {'console_night_w': 99.9, 'console': 8.9}

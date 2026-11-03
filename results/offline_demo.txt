@@ -1,0 +1,18 @@
+Baseline: {'kwh_month': 163.7, 'cost_month': 114.56} (simulated household, example tariff)
+
+=== OFFICIAL PLAN (computed by code) ===
+ - cut_standby on console  -> 6.62 kWh/month
+ - cut_standby on tv  -> 1.89 kWh/month
+ - reduce_usage_minutes on water_heater (10 min/day) -> 17.5 kWh/month
+Expected: 26.01 kWh/month | S/ 18.2 | 15.9 % of the bill
+
+=== VERIFICATION (simulated measurements) ===
+status: CONFIRMED
+months_before: 6
+months_after: 3
+predicted_kwh: 26.01
+measured_kwh: 26.6
+measured_pct_of_bill: 15.9
+measured_cost_saved_pen: 18.62
+co2_avoided_kg: 5.32
+Plan reverted (every action is reversible).
